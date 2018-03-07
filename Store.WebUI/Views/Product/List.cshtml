@@ -1,15 +1,15 @@
-﻿@using Store.Domain.Entities;
-@model IEnumerable<Product>
+﻿@using Store.Domain.Entities
+@model Store.WebUI.Models.ProductListViewModel
 
 @{
     ViewBag.Title = "Products";
 }
 
-@foreach (var p in Model)
+@foreach (var p in Model.Products)
 {
-    <div>
-        <h3>@p.Name</h3>
-        @p.Description
-        <h4>@p.Price.ToString("C")</h4>
-    </div>
+   @Html.Partial("ProductSummary", p)
 }
+
+<div class="pager">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x }))
+</div>

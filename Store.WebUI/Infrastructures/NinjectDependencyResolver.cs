@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using Ninject;
 using Store.Domain.Abstract;
+using Store.Domain.Concrete;
 using Store.Domain.Entities;
 
 namespace Store.WebUI.Infrastructures
@@ -29,17 +30,9 @@ namespace Store.WebUI.Infrastructures
             return kernel.GetAll(serviceType);
         }
 
-        public void AddBindings()
+        private void AddBindings()
         {
-            Mock<IProductRepository> mock = new Mock<IProductRepository>();
-            mock.Setup(m => m.Products).Returns(new List<Product>
-            {
-                new Product {Name = "Nike", Price = 1299},
-                new Product {Name = "Puma", Price = 699},
-                new Product {Name = "Adidas", Price = 900}
-            });
-
-            kernel.Bind<IProductRepository>().ToConstant(mock.Object);
+            kernel.Bind<IProductRepository>().To<EFProductRepository>();
         }
     }
 }
