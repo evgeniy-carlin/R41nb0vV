@@ -23,6 +23,7 @@ namespace Store.WebUI.Controllers
             IEnumerable<string> categories = repository.Products
                 .Select(x => x.Categoty)
                 .Distinct()
+                .Where(x => !string.IsNullOrEmpty(x))
                 .OrderBy(x => x);
             return PartialView("FlexMenu", categories);
         }
