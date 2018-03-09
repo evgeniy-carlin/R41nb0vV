@@ -1,7 +1,7 @@
 ﻿@model Store.Domain.Entities.Product
 
 @{
-    ViewBag.Title = "Админ: Редактирование " + @Model.Name;
+    ViewBag.Title = "Admin: Edit " + @Model.Name;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -9,7 +9,7 @@
     <div class="panel-heading">
         <h3>Редактирование товара "@Model.Name"</h3>
     </div>
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Edit", "Admin"))
     {
         <div class="panel-body">
             @Html.HiddenFor(m => m.ProductID)
@@ -18,17 +18,16 @@
                 if (property.PropertyName != "ProductID")
                 {
                     <div class="form-group">
-                        <label>
-                            @(property.DisplayName ?? property.PropertyName)
-                            @if (property.PropertyName == "Description")
-                            {
-                                @Html.TextArea(property.PropertyName, null, new { @class = "form-control", rows = 5 })
-                            }
-                            else
-                            {
-                                @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
-                            }
-                        </label>
+                        <label>@(property.DisplayName ?? property.PropertyName)</label>
+                        @if (property.PropertyName == "Description")
+                        {
+                            @Html.TextArea(property.PropertyName, null, new { @class = "form-control", rows = 5 })
+                        }
+                        else
+                        {
+                            @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
+                        }
+                        @Html.ValidationMessage(property.PropertyName)
                     </div>
                 }
             }
