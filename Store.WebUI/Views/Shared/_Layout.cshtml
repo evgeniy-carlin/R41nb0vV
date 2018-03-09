@@ -6,19 +6,33 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/ErrorStyles.css" rel="stylesheet" />
     <title>@ViewBag.Title</title>
+    <style>
+        .navbar-right {
+            float: right !important;
+            margin-right: 15px;
+            margin-left: 15px;
+        }
+    </style>
 </head>
 <body>
-    <div class="navbar navbar-inverse" role="navigation">
-        <a class="navbar-brand" href="https://www.instagram.com/anton_aleksandrov_postavshik/?hl=ru">НАЗВАНИЕ МАГАЗИНА</a>
+    <div class="navbar navbar-inverse">
+        <a class="navbar-brand" href="#"> <!--Это будет ссылкой на названии магазина, которая будет отправлять на главную страницу-->
+            <span class="hidden-xs">МАГАЗИН ОБУВИ</span>
+            <div class="visible-xs">МАГАЗИН</div>
+            <div class="visible-xs">ОБУВИ</div>
+        </a>
         @Html.Action("Summary", "Cart")
     </div>
-    <div class="row panel">
-        <div id="categories" class="col-xs-3">
-            @Html.Action("Menu", "Nav")
-        </div>
-        <div class="col-xs-8">
-            @RenderBody()
-        </div>
+    <div class="visible-xs">
+        @Html.Action("Menu", "Nav", new { horizontalLayout = true })
+</div>
+<div class="row panel">
+    <div class="col-sm-2 hidden-xs">
+        @Html.Action("Menu", "Nav")
     </div>
+    <div class="col-xs-12 col-sm-8">
+        @RenderBody()
+    </div>
+</div>
 </body>
 </html>
