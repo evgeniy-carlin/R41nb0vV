@@ -20,5 +20,8 @@ namespace Store.Domain.Entities
 
         [Required(ErrorMessage = "Укажите категорию")]
         public string Categoty { get; set; }
+
+        public byte[] ImageData { get; set; }
+        public string ImageMimeType { get; set; }
     }
 }

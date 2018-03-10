@@ -1,11 +1,13 @@
 ﻿using System.Web.Mvc;
 using Store.Domain.Abstract;
 using System.Linq;
+using System.Web;
 using Store.Domain.Entities;
 
 
 namespace Store.WebUI.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private IProductRepository repository;
@@ -27,10 +29,16 @@ namespace Store.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Product product)
+        public ActionResult Edit(Product product, HttpPostedFileBase image = null)
         {
             if (ModelState.IsValid)
             {
+                if (image != null)
+                {
+                    product.ImageMimeType = image.ContentType;
+                    product.ImageData = new byte[image.ContentLength];
+                    image.InputStream.Read(product.ImageData, 0, image.ContentLength);
+                }
                 repository.SaveProduct(product);
                 TempData["message"] = string.Format("Товар {0} был сохранен", product.Name);
                 return RedirectToAction("Index");
